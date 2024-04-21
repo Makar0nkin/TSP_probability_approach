@@ -1,2 +1,3 @@
-from graph_generator import generate_weighted_graph_matrix
-from ant_optimisation import AntColony
+# Warning: Do not run this script. For packaging purposes only!
+from .graph_operations import generate_weighted_graph_matrix, change_diagonals
+from .ant_optimisation import AntColony

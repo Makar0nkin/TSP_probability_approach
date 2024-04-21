@@ -2,13 +2,18 @@ import numpy as np
 from itertools import product
 from typing import Callable
 
+def change_diagonals(matrix: np.ndarray, to) -> None:
+    for (i, j) in product(range(len(matrix)), repeat=2):
+        if i == j:
+            matrix[i][j] = to
+
 def generate_weighted_graph_matrix(
         v_num: int, 
         e_num: int, 
         min_wight: int, 
         max_wight: int, 
         *, 
-        is_oriented: bool = True,
+        is_oriented: bool = False,
         random_state: int | None = None
     ) -> np.ndarray:
     if is_oriented and e_num > v_num * (v_num - 1):
@@ -28,6 +33,7 @@ def generate_weighted_graph_matrix(
         adjacency_matrix[i][j] = weights.pop()
         if not is_oriented:
             adjacency_matrix[j][i] = adjacency_matrix[i][j]
+    
     return adjacency_matrix
 
 if __name__ == '__main__':
@@ -44,6 +50,7 @@ if __name__ == '__main__':
     adjacency_matrix: np.ndarray = generate_weighted_graph_matrix(V_NUM, E_NUM, 
                                                                   MIN_WEIGHT, MAX_WEIGHT, 
                                                                   is_oriented=IS_ORIENTED, random_state=RANDOM_STATE)
+
     print(adjacency_matrix)
 
     G = nx.from_numpy_array(adjacency_matrix, create_using=nx.DiGraph if IS_ORIENTED else nx.Graph)

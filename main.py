@@ -1,5 +1,6 @@
 import numpy as np
-from alogithms import generate_weighted_graph_matrix, AntColony
+import networkx as nx
+from alogithms import generate_weighted_graph_matrix, ACO
 
 if __name__ == '__main__':
     V_NUM: int = 4  # number of vertices(вершины)
@@ -12,6 +13,7 @@ if __name__ == '__main__':
                                                               MIN_WEIGHT, MAX_WEIGHT, 
                                                               is_oriented=IS_ORIENTED, random_state=RANDOM_STATE)
     
-    ant_colony = AntColony(graph_matrix, E_NUM, E_NUM, 100, 0.95, alpha=1, beta=1)
-    shortest_path = ant_colony.run()
-    print (f"shorted_path: {shortest_path}")
+    G = nx.from_numpy_array(graph_matrix, create_using=nx.DiGraph if IS_ORIENTED else nx.Graph)
+    # ant_colony = AntColony(graph_matrix, E_NUM, E_NUM, 100, 0.95, alpha=1, beta=1)
+    # shortest_path = ant_colony.run()
+    # print (f"shorted_path: {shortest_path}")

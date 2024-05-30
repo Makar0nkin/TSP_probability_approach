@@ -1,11 +1,15 @@
 import numpy as np
 from itertools import product
 from typing import Callable
+import networkx as nx
+import matplotlib.pyplot as plt
 
-def change_diagonals(matrix: np.ndarray, to) -> None:
+def change_diagonals(matrix: np.ndarray, *,  to) -> np.ndarray:
+    matrix = matrix.copy()
     for (i, j) in product(range(len(matrix)), repeat=2):
         if i == j:
             matrix[i][j] = to
+    return matrix
 
 def generate_weighted_graph_matrix(
         v_num: int, 
@@ -35,6 +39,15 @@ def generate_weighted_graph_matrix(
             adjacency_matrix[j][i] = adjacency_matrix[i][j]
     
     return adjacency_matrix
+
+
+def save_graph_picture(G):
+    pos=nx.spring_layout(G)
+    nx.draw_networkx(G, pos)
+    labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    plt.savefig(f'{G}', dpi=300)
+
 
 if __name__ == '__main__':
     import networkx as nx
